@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="tenisChampApp">
+
+<head>
+    <!-- Angular -->
+    <script src="../../bower_components/angular/angular.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Campeonato do Vila 2016</title>
+
+    <!-- Bootstrap -->
+    <link href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    
+    <script src="../controller/campeonato_status_controller.js"></script>
+
+    <!-- Restangular -->
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+    <script type="text/javascript" src="../../bower_components/restangular/dist/restangular.min.js"></script>
+</head>
+
+<body ng-controller="CampeonatoStatusController" data-ng-init="startLoad()">
+
+
+    <!-- JQuery -->
+    <script src="../../bower_components/jquery/dist/jquery.js"></script>
+    <!-- Bootstrap -->
+    <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <div class="container" style="text-align: center">
+        <h2>Campeonatos</h2>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Opções do campeonato
+        </a>
+      </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body" style="text-align:left">
+                        <form id="idForm" ng-submit="cadastroCampeonato">
+                            <div class="form-group">
+                                <label>{{campeonato.nome}}</label>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" ng-click="sortearJogadores()" class="btn btn-primary"> Sortear jogadores </button>
+                            </div>
+                            <button type="button" ng-click="salvarGrupos()" class="btn btn-primary"> Salvar </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+          Jogadores
+        </a>
+      </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body" style="text-align:left">
+                        <div class="col-md-5">
+                            <h3>Jogadores Disponiveis</h3>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center">Foto</th>
+                                        <th style="text-align: center">Apelido</th>
+                                        <th style="text-align: center"></th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="jogador in jogadoresOp">
+                                    <td style="vertical-align:middle">
+                                        <img height="100px" width="80px" src="../../images/{{jogador.foto}}" />
+                                    </td>
+                                    <td style="vertical-align:middle">{{jogador.apelido}}</td>
+                                    <td style="vertical-align:middle">
+                                        <button class="btn btn-primary" ng-click="adicionarJogador(jogador)">X
+                                            </button> </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <div class="col-md-5">
+                            <h3>Jogadores Participantes</h3>
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center">Foto</th>
+                                        <th style="text-align: center">Apelido</th>
+                                        <th style="text-align: center"></th>
+                                    </tr>
+                                </thead>
+                                <tr ng-repeat="jogador in jogadoresPart">
+                                    <td style="vertical-align:middle">
+                                        <img height="100px" width="80px" src="../../images/{{jogador.foto}}" />
+                                    </td>
+                                    <td style="vertical-align:middle">{{jogador.apelido}}</td>
+                                    <td style="vertical-align:middle">
+                                        <button class="btn btn-primary" ng-click="removerJogador(jogador)">X
+                                            </button> </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Campeonatos
+        </a>
+      </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center">Nome</th>
+                                    <th style="text-align: center">Quantidade por grupo</th>
+                                    <th style="text-align: center">Ida e volta</th>
+                                    <th style="text-align: center"></th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="camp in campeonatos">
+                                <td style="vertical-align:middle">{{camp.nome}}</td>
+                                <td style="vertical-align:middle">{{camp.quantidadeGrupo}}</td>
+                                <td style="vertical-align:middle">{{camp.idaVolta}}</td>
+                                <td style="vertical-align:middle">
+                                    <button class="btn btn-primary" id="selectCampButton" ng-click="selecionarCampeonato(camp)">X
+                                            </button> </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" ng-repeat="grupo in grupos">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center" colspan="3">{{grupo.nome}}</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="participante in grupo.participantes">
+                    <td style="vertical-align:middle">
+                        <img height="100px" width="80px" src="../../images/{{participante.foto}}" />
+                    </td>
+                    <td style="vertical-align:middle" >{{participante.apelido}}</td>
+                    <td style="vertical-align:middle" >{{participante.pontos}}</td>
+                </tr>
+            </table>
+
+            <div class="col-md-6" ng-repeat="partida in grupo.partidas">
+                <div class="col-md-6">
+                    <img height="90px" width="60px" class="img-rounded" src="../../images/{{partida.casa.foto}}" />
+                </div>
+                <div class="col-md-6">
+                    <img height="90px" width="60px" class="img-rounded" src="../../images/{{partida.visitante.foto}}" />
+                </div>
+                <div class="col-md-12">
+                    <input class="col-md-6 " type="number" ng-model="partida.scoreCasa" />
+                    <input class="col-md-6 " type="number" ng-model="partida.scoreVisitante" />
+                </div>
+            </div>
+            <button class="btn btn-primary" ng-click="atualizarGrupo(grupo)">Atualizar Placares</button>
+        </div>
+    </div>
+</body>
+
+</html>

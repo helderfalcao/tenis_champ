@@ -1,0 +1,23 @@
+{
+  "name": "tenis_championship",
+  "version": "1.0.0",
+  "description": "Tênis Championship",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/christkv/myfirstproject.git"
+  },
+  "dependencies": {
+    "mongoose": "*",
+    "express": "*",
+    "cors": "*",
+    "body-parser": "*",
+    "multer": "*"
+  },
+  "author": "Helder Falcão",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/christkv/myfirstproject/issues"
+  },
+  "homepage": "https://github.com/christkv/myfirstproject"
+}
