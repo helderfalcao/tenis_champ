@@ -1,0 +1,34 @@
+{
+  "name": "jointjs",
+  "private": true,
+  "dependencies": {
+    "lodash": "3.10.1",
+    "backbone": "1.2.1",
+    "jquery": "2.0.3",
+    "graphlib": "1.0.7",
+    "dagre": "0.7.4"
+  },
+  "devDependencies": {
+    "qunit": "~1.18.0",
+    "blanket": "~1.1.5",
+    "requirejs": "2.1.17",
+    "sinonjs": "~1.14.1"
+  },
+  "main": [
+    "dist/joint.js",
+    "dist/joint.css"
+  ],
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/clientIO/joint",
+  "version": "0.9.7",
+  "_release": "0.9.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.7",
+    "commit": "4d054ca325e843c6b0df469d268fb67c07a3bd33"
+  },
+  "_source": "https://github.com/clientIO/joint.git",
+  "_target": "^0.9.7",
+  "_originalSource": "jointjs",
+  "_direct": true
+}

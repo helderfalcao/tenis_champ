@@ -27,9 +27,9 @@ app.put('/jogador', function (req, res, next) {
       req.query.nome,
       req.query.apelido,
       req.query.email,
-      req.query.foto);
+      req.query.foto, 
+      res);
   }
-  res.send(200);
 });
 
 app.get('/campeonato', function (req, res, next) {
@@ -37,13 +37,18 @@ app.get('/campeonato', function (req, res, next) {
 });
 
 app.put('/campeonato', function (req, res, next) {
-  if ("/campeonato" != req.originalUrl) {
-    var campeonato = campeonatoService.cadastraCampeonato(
-      req.query.id,
-      req.query.nome,
-      req.query.quantidadeGrupo,
-      req.query.idaVolta);
-  }
+  var campeonato = campeonatoService.cadastraCampeonato(
+    req.query.id,
+    req.query.nome,
+    req.query.quantidadeGrupo,
+    req.query.idaVolta,
+    req.query.classPorGrupo,
+    res);
+
+});
+
+app.delete('/campeonato/:id?', function (req, res, next) {
+  var campeonato = campeonatoService.deletar(req.params.id, res);
   res.send(200);
 });
 
@@ -53,7 +58,7 @@ app.get('/grupo', function (req, res, next) {
 
 app.post('/grupo', function (req, res) {
   var grupos = req.body;
-  var grupo = grupoService.salvarGrupos(req.body[0],req.body[1]);
+  var grupo = grupoService.salvarGrupos(req.body[0], req.body[1]);
   res.send(200);
 });
 

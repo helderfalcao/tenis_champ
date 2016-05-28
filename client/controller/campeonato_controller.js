@@ -14,10 +14,21 @@ tenisChampApp.controller('CampeonatosController', function ($scope, Restangular)
             id: $scope.campeonatoCadastro._id,
             nome: $scope.campeonatoCadastro.nome,
             quantidadeGrupo: $scope.campeonatoCadastro.quantidadeGrupo,
-            idaVolta: $scope.campeonatoCadastro.idaVolta
+            idaVolta: $scope.campeonatoCadastro.idaVolta,
+            classPorGrupo: $scope.campeonatoCadastro.classPorGrupo
+        }).then(function (campeonato) {
+            $scope.campeonatos.push(campeonato);
         });
         $scope.campeonatoCadastro = $scope.initializeCapeonato();
 
+    };
+
+    $scope.deletar = function () {
+        var request = Restangular.oneUrl('Campeonatos',
+            'http://192.168.1.21:8080/campeonato/').one($scope.campeonatoCadastro._id).remove();
+        var index = $scope.campeonatos.indexOf($scope.campeonatoCadastro);
+        $scope.campeonatos.splice(index, 1);
+        $scope.campeonatoCadastro = $scope.initializeCapeonato();
     };
 
     $scope.campeonatos = [
@@ -28,11 +39,12 @@ tenisChampApp.controller('CampeonatosController', function ($scope, Restangular)
         Restangular.allUrl('Campeonatos',
             'http://192.168.1.21:8080/campeonato').getList().then(function (campeonatosLista) {
                 $scope.campeonatos = campeonatosLista;
-            });;
+            });
+        $scope.campeonatoCadastro = $scope.initializeCapeonato();
     };
 
     $scope.initializeCapeonato = function () {
-        $scope.campeonatoCadastro = { _id: null, nome: "", quantidadeGrupo: "", idaVolta: "false" };
+        $scope.campeonatoCadastro = { _id: null, nome: "", quantidadeGrupo: "", idaVolta: "false", classPorGrupo: "" };
     }
 
 });
